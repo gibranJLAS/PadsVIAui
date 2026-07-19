@@ -1,3 +1,5 @@
+loadstring(game:HttpGet("https://raw.githubusercontent.com/gibranJLAS/PadsVIAui/refs/heads/main/Funcs/NoclipHack.lua"))()
+
 local ScreenGui = Instance.new("ScreenGui")
 ScreenGui.Name = "MenuPadsVIAui"
 ScreenGui.ResetOnSpawn = false
@@ -81,6 +83,59 @@ ScrollFrame.BackgroundTransparency = 1
 ScrollFrame.BorderSizePixel = 1
 
 
+local PlayersFrame = Instance.new("Frame")
+PlayersFrame.Name = "PlayersFrameSP"
+PlayersFrame.Parent = Main
+
+PlayersFrame.Position = UDim2.new(0.36, 0, 0, 41)
+PlayersFrame.Size = UDim2.new(0.636, 0, 0.86, 0)
+PlayersFrame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+PlayersFrame.Visible = false
+
+local PlayerScroll = Instance.new("ScrollingFrame")
+PlayerScroll.Name = "PlayerScroll"
+PlayerScroll.Parent = PlayersFrame
+
+PlayerScroll.Position = UDim2.new(0, 0, 0, 0)
+PlayerScroll.Size = UDim2.new(1, 0, 1, 0)
+
+PlayerScroll.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+PlayerScroll.BorderSizePixel = 0
+
+PlayerScroll.ScrollBarThickness = 4
+PlayerScroll.CanvasSize = UDim2.new(0, 0, 0, 0)
+PlayerScroll.AutomaticCanvasSize = Enum.AutomaticSize.Y
+PlayerScroll.ClipsDescendants = true
+PlayerScroll.Visible = false
+
+local Button = Instance.new("TextButton")
+Button.Name = "PlayersScrollButton"
+Button.Parent = PlayerScroll
+
+Button.Size = UDim2.new(1, -10, 0, 35)
+Button.Position = UDim2.new(0, 5, 0, 8) -- UIListLayout yang mengatur posisi
+Button.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+Button.BorderSizePixel = 5
+
+Button.Text = "Noclip"
+Button.Font = Enum.Font.Gotham
+Button.TextSize = 20
+Button.TextColor3 = Color3.fromRGB(255, 255, 255)
+
+local ButtonCorner = Instance.new("UICorner")
+ButtonCorner.CornerRadius = UDim.new(0, 6)
+ButtonCorner.Parent = Button
+
+Button.MouseButton1Click:Connect(function()
+    noclip = not noclip
+    
+    if noclip then
+      Button.BackgroundColor3 = Color3.fromRGB(0, 180, 0)
+     else
+      Button.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+      end
+end)
+
 
 local Scroll = Instance.new("ScrollingFrame")
 Scroll.Name = "ScrollFrameVIAui"
@@ -103,7 +158,7 @@ Scroll.ClipsDescendants = true
 
 
 local Button = Instance.new("TextButton")
-Button.Name = "Button1"
+Button.Name = "PlayersButton"
 Button.Parent = Scroll
 
 Button.Size = UDim2.new(1, -10, 0, 35)
@@ -121,5 +176,6 @@ ButtonCorner.CornerRadius = UDim.new(0, 6)
 ButtonCorner.Parent = Button
 
 Button.MouseButton1Click:Connect(function()
-    print("Button ditekan")
+    PlayerScroll.Visible = true
+    PlayersFrame.Visible = true
 end)
