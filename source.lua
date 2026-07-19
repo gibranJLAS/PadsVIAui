@@ -127,13 +127,13 @@ ButtonCorner.CornerRadius = UDim.new(0, 6)
 ButtonCorner.Parent = Button
 
 Button.MouseButton1Click:Connect(function()
-    noclip = not noclip
-    
-    if noclip then
-      Button.BackgroundColor3 = Color3.fromRGB(0, 180, 0)
-     else
+    if  isnoclipping==true then
+      isnoclipping=false
       Button.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
-      end
+     else
+      isnoclipping=true
+      Button.BackgroundColor3 = Color3.fromRGB(0, 180, 0)
+    end
 end)
 
 
