@@ -28,10 +28,13 @@ RunService.Stepped:Connect(function()
         lastNoclipState = noclip -- Simpan status terakhir
 
         -- Loop CanCollide bawaan dari script kamu
-        for _, part in pairs(character:GetDescendants()) do
-            if part:IsA("BasePart") then
-                part.CanCollide = not noclip
-            end
-        end
-    end
+        for _, part in ipairs(character:GetDescendants()) do
+    if part:IsA("BasePart") then
+        if part.Name == "HumanoidRootPart" then
+            part.CanCollide = false
+        else
+            part.CanCollide = not noclip
+          end
+      end
+  end
 end)
