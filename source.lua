@@ -1,4 +1,7 @@
-loadstring(game:HttpGet("https://raw.githubusercontent.com/gibranJLAS/PadsVIAui/main/Funcs/NoclipHack.lua"))()
+local player = game:GetService("Players").LocalPlayer
+local runservice = game:GetService("RunService")
+
+local isnoclipping = false
 
 local ScreenGui = Instance.new("ScreenGui")
 ScreenGui.Name = "MenuPadsVIAui"
@@ -125,6 +128,18 @@ Button.TextColor3 = Color3.fromRGB(255, 255, 255)
 local ButtonCorner = Instance.new("UICorner")
 ButtonCorner.CornerRadius = UDim.new(0, 6)
 ButtonCorner.Parent = Button
+
+runservice.Stepped:Connect(function()
+    if player.Character then
+        if isnoclipping == true then
+            for i, v in pairs(player.Character:GetDescendants()) do
+               if v:IsA("BasePart") then
+                   v.CanCollide = false
+                 end
+            end
+        end
+    end
+end)
 
 Button.MouseButton1Click:Connect(function()
     if  isnoclipping==true then
