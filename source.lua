@@ -1,17 +1,85 @@
 local player = game:GetService("Players").LocalPlayer
 local runservice = game:GetService("RunService")
 
+local originalCollision = {}
 local isnoclipping = false
+
+local OpenGui = Instance.new("ScreenGui")
+OpenGui.Name = "OpenGui"
+OpenGui.ResetOnSpawn = false
+OpenGui.Parent = game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui")
+
+local PadsButton = Instance.new("TextButton")
+PadsButton.Name = "PadsButton"
+PadsButton.Parent = OpenGui
+PadsButton.Active = true
+
+PadsButton.Size = UDim2.new(0, 50, 0, 20)
+PadsButton.Position = UDim2.new(0, 10, 0, 10)
+
+PadsButton.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+PadsButton.Text = "Pads"
+PadsButton.TextColor3 = Color3.new(1, 1, 1)
+PadsButton.Font = Enum.Font.GothamBold
+PadsButton.TextSize = 12
+PadsButton.BorderSizePixel = 0
+
+local Corner = Instance.new("UICorner")
+Corner.CornerRadius = UDim.new(0, 4)
+Corner.Parent = PadsButton
+
+local UserInputService = game:GetService("UserInputService")
+
+local dragging = false
+local dragStart
+local startPos
+
+PadsButton.InputBegan:Connect(function(input)
+	if input.UserInputType == Enum.UserInputType.MouseButton1 
+	or input.UserInputType == Enum.UserInputType.Touch then
+
+		dragging = true
+		dragStart = input.Position
+		startPos = PadsButton.Position
+	end
+end)
+
+UserInputService.InputChanged:Connect(function(input)
+	if dragging then
+		local delta = input.Position - dragStart
+
+		PadsButton.Position = UDim2.new(
+			startPos.X.Scale,
+			startPos.X.Offset + delta.X,
+			startPos.Y.Scale,
+			startPos.Y.Offset + delta.Y
+		)
+	end
+end)
+
+PadsButton.InputEnded:Connect(function(input)
+	if input.UserInputType == Enum.UserInputType.MouseButton1 
+	or input.UserInputType == Enum.UserInputType.Touch then
+
+		dragging = false
+	end
+end)
 
 local ScreenGui = Instance.new("ScreenGui")
 ScreenGui.Name = "MenuPadsVIAui"
 ScreenGui.ResetOnSpawn = false
 ScreenGui.Parent = game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui")
 
+PadsButton.MouseButton1Click:Connect(function()
+   ScreenGui.Enabled = true
+   OpenGui.Enabled = false
+end)
+
 
 local Main = Instance.new("Frame")
 Main.Name = "Main"
 Main.Parent = ScreenGui
+Main.Active = true
 
 -- Posisi di tengah
 Main.AnchorPoint = Vector2.new(0.5, 0.5)
@@ -19,6 +87,41 @@ Main.Position = UDim2.fromScale(0.5, 0.5)
 
 -- Size bisa diubah nanti
 Main.Size = UDim2.new(0, 430, 0, 300)
+
+local draggingMain = false
+local dragStartMain
+local startPosMain
+
+Main.InputBegan:Connect(function(input)
+	if input.UserInputType == Enum.UserInputType.MouseButton1 
+	or input.UserInputType == Enum.UserInputType.Touch then
+
+		draggingMain = true
+		dragStartMain = input.Position
+		startPosMain = Main.Position
+	end
+end)
+
+UserInputService.InputChanged:Connect(function(input)
+	if draggingMain then
+		local delta = input.Position - dragStartMain
+
+		Main.Position = UDim2.new(
+			startPosMain.X.Scale,
+			startPosMain.X.Offset + delta.X,
+			startPosMain.Y.Scale,
+			startPosMain.Y.Offset + delta.Y
+		)
+	end
+end)
+
+Main.InputEnded:Connect(function(input)
+	if input.UserInputType == Enum.UserInputType.MouseButton1 
+	or input.UserInputType == Enum.UserInputType.Touch then
+
+		draggingMain = false
+	end
+end)
 
 Main.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
 Main.BorderSizePixel = 0
@@ -67,9 +170,9 @@ Close.BackgroundColor3 = Color3.fromRGB(220, 60, 60)
 Close.BorderSizePixel = 0
 
 Close.MouseButton1Click:Connect(function()
-    ScreenGui:Destroy()
+    ScreenGui.Enabled = false
+    OpenGui.Enabled = true
 end)
-
 local Corner = Instance.new("UICorner")
 Corner.CornerRadius = UDim.new(0, 50)
 Corner.Parent = Close
@@ -111,43 +214,53 @@ PlayerScroll.AutomaticCanvasSize = Enum.AutomaticSize.Y
 PlayerScroll.ClipsDescendants = true
 PlayerScroll.Visible = false
 
-local Button = Instance.new("TextButton")
-Button.Name = "PlayersScrollButton"
-Button.Parent = PlayerScroll
+local NoclipButton = Instance.new("TextButton")
+NoclipButton.Name = "NoclipButtons"
+NoclipButton.Parent = PlayerScroll
 
-Button.Size = UDim2.new(1, -10, 0, 35)
-Button.Position = UDim2.new(0, 5, 0, 8) -- UIListLayout yang mengatur posisi
-Button.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
-Button.BorderSizePixel = 5
+NoclipButton.Size = UDim2.new(1, -10, 0, 35)
+NoclipButton.Position = UDim2.new(0, 5, 0, 8) -- UIListLayout yang mengatur posisi
+NoclipButton.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+NoclipButton.BorderSizePixel = 5
 
-Button.Text = "Noclip"
-Button.Font = Enum.Font.Gotham
-Button.TextSize = 20
-Button.TextColor3 = Color3.fromRGB(255, 255, 255)
+NoclipButton.Text = "Noclip"
+NoclipButton.Font = Enum.Font.Gotham
+NoclipButton.TextSize = 20
+NoclipButton.TextColor3 = Color3.fromRGB(255, 255, 255)
 
 local ButtonCorner = Instance.new("UICorner")
 ButtonCorner.CornerRadius = UDim.new(0, 6)
-ButtonCorner.Parent = Button
+ButtonCorner.Parent = NoclipButton
 
 runservice.Stepped:Connect(function()
-    if player.Character then
-        if isnoclipping == true then
-            for i, v in pairs(player.Character:GetDescendants()) do
-               if v:IsA("BasePart") then
-                   v.CanCollide = false
-                 end
+    if not player.Character then
+        return
+    end
+
+    for _, v in ipairs(player.Character:GetDescendants()) do
+        if v:IsA("BasePart") then
+            if isnoclipping then
+                if originalCollision[v] == nil then
+                    originalCollision[v] = v.CanCollide
+                end
+
+                v.CanCollide = false
+            else
+                if originalCollision[v] ~= nil then
+                    v.CanCollide = originalCollision[v]
+                end
             end
         end
     end
 end)
 
-Button.MouseButton1Click:Connect(function()
+NoclipButton.MouseButton1Click:Connect(function()
     if  isnoclipping==true then
       isnoclipping=false
-      Button.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+      NoclipButton.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
      else
       isnoclipping=true
-      Button.BackgroundColor3 = Color3.fromRGB(0, 180, 0)
+      NoclipButton.BackgroundColor3 = Color3.fromRGB(0, 180, 0)
     end
 end)
 
@@ -172,25 +285,25 @@ Scroll.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
 Scroll.ClipsDescendants = true
 
 
-local Button = Instance.new("TextButton")
-Button.Name = "PlayersButton"
-Button.Parent = Scroll
+local PlayersButton = Instance.new("TextButton")
+PlayersButton.Name = "PlayersButton"
+PlayersButton.Parent = Scroll
 
-Button.Size = UDim2.new(1, -10, 0, 35)
-Button.Position = UDim2.new(0, 5, 0, 8) -- UIListLayout yang mengatur posisi
-Button.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
-Button.BorderSizePixel = 0
+PlayersButton.Size = UDim2.new(1, -10, 0, 35)
+PlayersButton.Position = UDim2.new(0, 5, 0, 8) -- UIListLayout yang mengatur posisi
+PlayersButton.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+PlayersButton.BorderSizePixel = 0
 
-Button.Text = "Players"
-Button.Font = Enum.Font.Gotham
-Button.TextSize = 16
-Button.TextColor3 = Color3.fromRGB(255, 255, 255)
+PlayersButton.Text = "Players"
+PlayersButton.Font = Enum.Font.Gotham
+PlayersButton.TextSize = 16
+PlayersButton.TextColor3 = Color3.fromRGB(255, 255, 255)
 
 local ButtonCorner = Instance.new("UICorner")
 ButtonCorner.CornerRadius = UDim.new(0, 6)
-ButtonCorner.Parent = Button
+ButtonCorner.Parent = PlayersButton
 
-Button.MouseButton1Click:Connect(function()
+PlayersButton.MouseButton1Click:Connect(function()
     PlayerScroll.Visible = true
     PlayersFrame.Visible = true
 end)
