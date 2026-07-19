@@ -1,4 +1,4 @@
-loadstring(game:HttpGet("https://raw.githubusercontent.com/gibranJLAS/PadsVIAui/refs/heads/main/Funcs/NoclipHack.lua"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/gibranJLAS/PadsVIAui/main/Funcs/NoclipHack.lua"))()
 
 local ScreenGui = Instance.new("ScreenGui")
 ScreenGui.Name = "MenuPadsVIAui"
