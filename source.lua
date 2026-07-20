@@ -26,187 +26,6 @@ runservice.Stepped:Connect(function()
     end
 end)
 
-
-local ScreenGui = Instance.new("ScreenGui")
-ScreenGui.Name = "MenuPadsVIAui"
-ScreenGui.ResetOnSpawn = false
-ScreenGui.Parent = game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui")
-
-
-local Main = Instance.new("Frame")
-Main.Name = "Main"
-Main.Parent = ScreenGui
-
--- Posisi di tengah
-Main.AnchorPoint = Vector2.new(0.5, 0.5)
-Main.Position = UDim2.fromScale(0.5, 0.5)
-
--- Size bisa diubah nanti
-Main.Size = UDim2.new(0, 430, 0, 300)
-
-Main.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-Main.BorderSizePixel = 0
-
-
-local Corner = Instance.new("UICorner")
-Corner.CornerRadius = UDim.new(0, 1)
-Corner.Parent = Main
-
-
-
-local Title = Instance.new("TextLabel")
-Title.Name = "TitlePadsVIAui"
-Title.Parent = Main
-
-Title.Size = UDim2.new(1, 0, 0, 40)
-
-Title.Font = Enum.Font.GothamBold
-Title.Text = "MenuPads"
-Title.TextSize = 20
-Title.TextColor3 = Color3.fromRGB(255, 255, 255)
-Title.BackgroundColor3 = Color3.fromRGB(23, 23, 23)
-
-Title.TextXAlignment = Enum.TextXAlignment.Left
-
-local Corner = Instance.new("UICorner")
-Corner.CornerRadius = UDim.new(0, 1)
-Corner.Parent = Title
-
--- Setelah Title
-
-local Close = Instance.new("TextButton")
-Close.Name = "Close"
-Close.Parent = Main
-
-Close.AnchorPoint = Vector2.new(1, 0)
-Close.Position = UDim2.new(1, -10, 0, 8)
-Close.Size = UDim2.new(0, 24, 0, 24)
-
-Close.Text = "X"
-Close.Font = Enum.Font.GothamBold
-Close.TextSize = 18
-Close.TextColor3 = Color3.new(1, 1, 1)
-
-Close.BackgroundColor3 = Color3.fromRGB(220, 60, 60)
-Close.BorderSizePixel = 0
-
-Close.MouseButton1Click:Connect(function()
-    ScreenGui:Destroy()
-end)
-
-local Corner = Instance.new("UICorner")
-Corner.CornerRadius = UDim.new(0, 50)
-Corner.Parent = Close
-
-
-local ScrollFrame = Instance.new("Frame")
-ScrollFrame.Name = "ScrollFrameIns"
-ScrollFrame.Parent = Main
-
-ScrollFrame.Position = UDim2.new(0, 0, 0, 41)
-ScrollFrame.Size = UDim2.new(0.3, 0, 1, -41)
-
-ScrollFrame.BackgroundTransparency = 1
-ScrollFrame.BorderSizePixel = 1
-
-
-local PlayersFrame = Instance.new("Frame")
-PlayersFrame.Name = "PlayersFrameSP"
-PlayersFrame.Parent = Main
-
-PlayersFrame.Position = UDim2.new(0.36, 0, 0, 41)
-PlayersFrame.Size = UDim2.new(0.636, 0, 0.86, 0)
-PlayersFrame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-PlayersFrame.Visible = false
-
-local PlayerScroll = Instance.new("ScrollingFrame")
-PlayerScroll.Name = "PlayerScroll"
-PlayerScroll.Parent = PlayersFrame
-
-PlayerScroll.Position = UDim2.new(0, 0, 0, 0)
-PlayerScroll.Size = UDim2.new(1, 0, 1, 0)
-
-PlayerScroll.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-PlayerScroll.BorderSizePixel = 0
-
-PlayerScroll.ScrollBarThickness = 4
-PlayerScroll.CanvasSize = UDim2.new(0, 0, 0, 0)
-PlayerScroll.AutomaticCanvasSize = Enum.AutomaticSize.Y
-PlayerScroll.ClipsDescendants = true
-PlayerScroll.Visible = false
-
-local Button = Instance.new("TextButton")
-Button.Name = "PlayersScrollButton"
-Button.Parent = PlayerScroll
-
-Button.Size = UDim2.new(1, -10, 0, 35)
-Button.Position = UDim2.new(0, 5, 0, 8) -- UIListLayout yang mengatur posisi
-Button.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
-Button.BorderSizePixel = 5
-
-Button.Text = "Noclip"
-Button.Font = Enum.Font.Gotham
-Button.TextSize = 20
-Button.TextColor3 = Color3.fromRGB(255, 255, 255)
-
-local ButtonCorner = Instance.new("UICorner")
-ButtonCorner.CornerRadius = UDim.new(0, 6)
-ButtonCorner.Parent = Button
-
-Button.MouseButton1Click:Connect(function()
-    if  isnoclipping==true then
-      isnoclipping=false
-      Button.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
-     else
-      isnoclipping=true
-      Button.BackgroundColor3 = Color3.fromRGB(0, 180, 0)
-    end
-end)
-
-
-local Scroll = Instance.new("ScrollingFrame")
-Scroll.Name = "ScrollFrameVIAui"
-Scroll.Parent = ScrollFrame
-
--- Posisi di bawah Title
-Scroll.Position = UDim2.new(0, 0, 0, -1)
-
--- Mengisi sisa Main
-Scroll.Size = UDim2.new(1.2, 0, 1, 1)
-
-Scroll.BorderSizePixel = 0
-
-Scroll.ScrollBarThickness = 4
-Scroll.CanvasSize = UDim2.new(0, 0, 0, 0)
-
-Scroll.AutomaticCanvasSize = Enum.AutomaticSize.Y
-Scroll.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
-Scroll.ClipsDescendants = true
-
-
-local Button = Instance.new("TextButton")
-Button.Name = "PlayersButton"
-Button.Parent = Scroll
-
-Button.Size = UDim2.new(1, -10, 0, 35)
-Button.Position = UDim2.new(0, 5, 0, 8) -- UIListLayout yang mengatur posisi
-Button.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
-Button.BorderSizePixel = 0
-
-Button.Text = "Players"
-Button.Font = Enum.Font.Gotham
-Button.TextSize = 16
-Button.TextColor3 = Color3.fromRGB(255, 255, 255)
-
-local ButtonCorner = Instance.new("UICorner")
-ButtonCorner.CornerRadius = UDim.new(0, 6)
-ButtonCorner.Parent = Button
-
-Button.MouseButton1Click:Connect(function()
-    PlayerScroll.Visible = true
-    PlayersFrame.Visible = true
-end)
-
 local OpenGui = Instance.new("ScreenGui")
 OpenGui.Name = "OpenGui"
 OpenGui.ResetOnSpawn = false
@@ -268,10 +87,12 @@ PadsButton.InputEnded:Connect(function(input)
 	end
 end)
 
+
 local ScreenGui = Instance.new("ScreenGui")
 ScreenGui.Name = "MenuPadsVIAui"
 ScreenGui.ResetOnSpawn = false
 ScreenGui.Parent = game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui")
+ScreenGui.Enabled = false
 
 PadsButton.MouseButton1Click:Connect(function()
    ScreenGui.Enabled = true
@@ -282,7 +103,6 @@ end)
 local Main = Instance.new("Frame")
 Main.Name = "Main"
 Main.Parent = ScreenGui
-Main.Active = true
 
 -- Posisi di tengah
 Main.AnchorPoint = Vector2.new(0.5, 0.5)
@@ -290,41 +110,6 @@ Main.Position = UDim2.fromScale(0.5, 0.5)
 
 -- Size bisa diubah nanti
 Main.Size = UDim2.new(0, 430, 0, 300)
-
-local draggingMain = false
-local dragStartMain
-local startPosMain
-
-Main.InputBegan:Connect(function(input)
-	if input.UserInputType == Enum.UserInputType.MouseButton1 
-	or input.UserInputType == Enum.UserInputType.Touch then
-
-		draggingMain = true
-		dragStartMain = input.Position
-		startPosMain = Main.Position
-	end
-end)
-
-UserInputService.InputChanged:Connect(function(input)
-	if draggingMain then
-		local delta = input.Position - dragStartMain
-
-		Main.Position = UDim2.new(
-			startPosMain.X.Scale,
-			startPosMain.X.Offset + delta.X,
-			startPosMain.Y.Scale,
-			startPosMain.Y.Offset + delta.Y
-		)
-	end
-end)
-
-Main.InputEnded:Connect(function(input)
-	if input.UserInputType == Enum.UserInputType.MouseButton1 
-	or input.UserInputType == Enum.UserInputType.Touch then
-
-		draggingMain = false
-	end
-end)
 
 Main.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
 Main.BorderSizePixel = 0
@@ -376,6 +161,7 @@ Close.MouseButton1Click:Connect(function()
     ScreenGui.Enabled = false
     OpenGui.Enabled = true
 end)
+
 local Corner = Instance.new("UICorner")
 Corner.CornerRadius = UDim.new(0, 50)
 Corner.Parent = Close
@@ -418,7 +204,7 @@ PlayerScroll.ClipsDescendants = true
 PlayerScroll.Visible = false
 
 local NoclipButton = Instance.new("TextButton")
-NoclipButton.Name = "NoclipButtons"
+NoclipButton.Name = "ButtonNoclip"
 NoclipButton.Parent = PlayerScroll
 
 NoclipButton.Size = UDim2.new(1, -10, 0, 35)
@@ -466,25 +252,25 @@ Scroll.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
 Scroll.ClipsDescendants = true
 
 
-local PlayersButton = Instance.new("TextButton")
-PlayersButton.Name = "PlayersButton"
-PlayersButton.Parent = Scroll
+local ButtonPlayer = Instance.new("TextButton")
+ButtonPlayer.Name = "PlayersButton"
+ButtonPlayer.Parent = Scroll
 
-PlayersButton.Size = UDim2.new(1, -10, 0, 35)
-PlayersButton.Position = UDim2.new(0, 5, 0, 8) -- UIListLayout yang mengatur posisi
-PlayersButton.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
-PlayersButton.BorderSizePixel = 0
+ButtonPlayer.Size = UDim2.new(1, -10, 0, 35)
+ButtonPlayer.Position = UDim2.new(0, 5, 0, 8) -- UIListLayout yang mengatur posisi
+ButtonPlayer.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+ButtonPlayer.BorderSizePixel = 0
 
-PlayersButton.Text = "Players"
-PlayersButton.Font = Enum.Font.Gotham
-PlayersButton.TextSize = 16
-PlayersButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+ButtonPlayer.Text = "Players"
+ButtonPlayer.Font = Enum.Font.Gotham
+ButtonPlayer.TextSize = 16
+ButtonPlayer.TextColor3 = Color3.fromRGB(255, 255, 255)
 
 local ButtonCorner = Instance.new("UICorner")
 ButtonCorner.CornerRadius = UDim.new(0, 6)
-ButtonCorner.Parent = PlayersButton
+ButtonCorner.Parent = ButtonPlayer
 
-PlayersButton.MouseButton1Click:Connect(function()
+ButtonPlayer.MouseButton1Click:Connect(function()
     PlayerScroll.Visible = true
     PlayersFrame.Visible = true
 end)
